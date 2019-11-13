@@ -1,4 +1,4 @@
-#include <Arduino.h>
+//#include <Arduino.h> --> Solo aplica para platform.io
 #include <SPI.h>
 #include "MFRC522.h"
 #include <Wire.h>
@@ -35,7 +35,26 @@ return;
 }
 
 // Dump debug info about the card; PICC_HaltA() is automatically called
-mfrc522.PICC_DumpToSerial(&(mfrc522.uid));
+//mfrc522.PICC_DumpToSerial(&(mfrc522.uid));
+
+//** Imprime en pantalla el UID
+rfidUidPrintHex();
+
+}
+
+void rfidUidPrintHex()
+{
+	//Serial.print("Card UID: (HEX)");
+	
+	for(byte i = 0; i < mfrc522.uid.size; i++)
+	{
+//		Serial.print(mfrc522.uid.uidByte[i], HEX);	// print without spaces
+		
+		Serial.print(mfrc522.uid.uidByte[i] < 0x10 ? " 0" : " ");
+		Serial.print(mfrc522.uid.uidByte[i], HEX);
+	}
+	
+	Serial.println();
 }
 
 
